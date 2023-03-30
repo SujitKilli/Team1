@@ -1,2 +1,2 @@
 # VR-Paradise
-This is repo for our VR project 
+This is a repo for our VR project 
