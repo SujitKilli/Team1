@@ -12,7 +12,6 @@ public class SoccerBall : MonoBehaviour
     public GameObject goal;
     public GameObject character;
     public Vector3 initialposition;
-    public Vector3 maxdistance;
     public int score=0;
     public TextMeshProUGUI text;
     public TextMeshProUGUI chance,totaltext;
@@ -22,7 +21,7 @@ public class SoccerBall : MonoBehaviour
     void Start()
     {
         initialposition = ball.transform.position;
-        maxdistance = goal.transform.position;
+        //maxdistance = goal.transform.position;
         //total.SetActive(false);
         source.Stop();
     }
@@ -30,20 +29,22 @@ public class SoccerBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ball.transform.SetParent(character.transform);
+        ball.transform.SetParent(character.transform);
+        GetComponent<Rigidbody>().isKinematic = false;
         if (Input.GetButtonDown("js1"))
         {
-            //ball.transform.SetParent(null);
-            Vector3 shoot = (this.transform.position- Camera.main.transform.position + Camera.main.transform.forward * 10).normalized;
+            ball.transform.SetParent(null);
+            Vector3 shoot = (gameObject.transform.position- Camera.main.transform.position + Camera.main.transform.forward * 150).normalized;
             Debug.Log(shoot);
             //shoot.x = -shoot.x;
             GetComponent<Rigidbody>().AddForce(shoot * force+new Vector3(0,5f,0), ForceMode.Impulse);
 
         }
-        if ((gameObject.transform.position).magnitude > maxdistance.magnitude)
+        if ((gameObject.transform.position).magnitude > (goal.transform.position).magnitude)
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            ball.transform.position = initialposition;
+            GetComponent<Rigidbody>().isKinematic = true;
+            ball.transform.position = character.transform.position + new Vector3(0, 0, 10);
             chances--;
             chance.text = chances.ToString();
         }
@@ -66,9 +67,10 @@ public class SoccerBall : MonoBehaviour
             text.text = score.ToString();
             source.Play();
             GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().isKinematic = true;
             chances--;
             chance.text = chances.ToString();
-            ball.transform.position = initialposition;
+            ball.transform.position=character.transform.position+new Vector3(0,0,10);
 
         }
     }
