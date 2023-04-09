@@ -29,6 +29,8 @@ public static class Globals
     public static bool isglobalVisible = false;
     public static bool hideOutline = false;
 
+    public static bool isTeleport = false;
+
     public static bool isFly = false;
 
     public static float ypos = 0f;

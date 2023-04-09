@@ -14,7 +14,7 @@ public class GameEnter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(inball==true && Input.GetButtonDown("js3"))
+        if(inball==true && Input.GetButtonDown(Globals.x))
         {
             SceneManager.LoadScene("Game");
         }
