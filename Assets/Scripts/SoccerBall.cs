@@ -31,12 +31,10 @@ public class SoccerBall : MonoBehaviour
     {
         ball.transform.SetParent(character.transform);
         GetComponent<Rigidbody>().isKinematic = false;
-        if (Input.GetButtonDown("js1"))
+        if (Input.GetButtonDown(Globals.x))
         {
             ball.transform.SetParent(null);
             Vector3 shoot = (gameObject.transform.position- Camera.main.transform.position + Camera.main.transform.forward * 150).normalized;
-            Debug.Log(shoot);
-            //shoot.x = -shoot.x;
             GetComponent<Rigidbody>().AddForce(shoot * force+new Vector3(0,5f,0), ForceMode.Impulse);
 
         }
@@ -60,7 +58,6 @@ public class SoccerBall : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Collision occurs");
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.name == "Soccergoal")
         {
             score++;

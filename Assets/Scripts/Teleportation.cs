@@ -32,13 +32,10 @@ public class Teleportation : MonoBehaviour
         }
         if (teleportmenu.activeSelf == true)
             {
-                Debug.Log("In teleport menu");
                 if (Time.time - lasttime > 0.5f)
                 {
-                    Debug.Log("In time");
                     if (Input.GetAxis("Vertical") > 0)
                     {
-                        Debug.Log(teleindex);
                         teleindex--;
                         if (teleindex < 0)
                         {

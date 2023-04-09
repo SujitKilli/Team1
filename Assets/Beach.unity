@@ -16056,6 +16056,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a14be635b25016498a12eae60d42b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teleportbuttons: []
+  teleportmenu: {fileID: 104743930}
+  garden: {fileID: 1299505635}
+  mountain: {fileID: 934674078}
+  beach: {fileID: 219365794}
   reticle: {fileID: 1337448470}
   UMenu: {fileID: 690947428}
   rain: {fileID: 2020123334}
@@ -21411,7 +21416,6 @@ GameObject:
   - component: {fileID: 1366075278}
   - component: {fileID: 1366075277}
   - component: {fileID: 1366075276}
-  - component: {fileID: 1366075280}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -21500,26 +21504,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1366075280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366075275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9a335a6bedd93428dab64d8e05fb60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teleportbuttons: []
-  teleportmenu: {fileID: 104743930}
-  garden: {fileID: 1299505635}
-  mountain: {fileID: 934674078}
-  beach: {fileID: 219365794}
-  teleindex: 0
-  gs: {fileID: 0}
-  character: {fileID: 1313381318}
 --- !u!1001 &1374234850
 PrefabInstance:
   m_ObjectHideFlags: 0
