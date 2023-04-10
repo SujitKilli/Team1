@@ -14,7 +14,7 @@ public class Play : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(cmenu.index==0 && (Input.GetButtonDown("js3")))
+        if(cmenu.index==0 && (Input.GetButtonDown(Globals.ok)))
         {
             SceneManager.LoadScene("Beach");
         }

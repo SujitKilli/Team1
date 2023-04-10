@@ -53,19 +53,19 @@ public class Barbecue : MonoBehaviour
         if(c){
             GameObject chicken = Instantiate(chickRaw,bbqplate.transform.position + new Vector3(Random.Range(-3f, 3f),0.5f,Random.Range(-2.5f, 2.5f)), Quaternion.identity);
             chicken.transform.localScale = chicken.transform.localScale*2f;
-            StartCoroutine(TransformToIV(chicken,chickRoasted));
-             msgTxt.text = "Chicken added to barbeque";
+            StartCoroutine(TransformToIV(chicken,chickRoasted,"chickenbbq"));
+            msgTxt.text = "Chicken added to barbeque";
         } 
         else if(f){
             GameObject fish = Instantiate(fishRaw,bbqplate.transform.position + new Vector3(Random.Range(-3f, 3f),0.5f,Random.Range(-2.5f, 2.5f)), Quaternion.identity);
             fish.transform.localScale = fish.transform.localScale*2f;
-            StartCoroutine(TransformToIV(fish,fishRoasted));
+            StartCoroutine(TransformToIV(fish,fishRoasted,"fishbbq"));
             msgTxt.text = "Fish added to barbeque";
         }
         else if(s){
             GameObject steak = Instantiate(steakRaw,bbqplate.transform.position + new Vector3(Random.Range(-3f, 3f),0.5f,Random.Range(-2.5f, 2.5f)), Quaternion.identity);
             steak.transform.localScale = steak.transform.localScale*2f;
-            StartCoroutine(TransformToIV(steak,steakRoasted));
+            StartCoroutine(TransformToIV(steak,steakRoasted,"steakbbq"));
             msgTxt.text = "Steak added to barbeque";
         }
         mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;
@@ -81,12 +81,16 @@ public class Barbecue : MonoBehaviour
         mesageObj.SetActive(false);
     }
 
-    IEnumerator TransformToIV(GameObject raw, GameObject cooked){
+    IEnumerator TransformToIV(GameObject raw, GameObject cooked,string tag){
         yield return new WaitForSeconds(15);
         Destroy(raw);
         GameObject bbqed = Instantiate(cooked,new Vector3(0,0,0), Quaternion.identity);
         bbqed.transform.localScale = bbqed.transform.localScale*2f;
         bbqed.SetActive(false);
+        bbqed.tag = tag;
+        BoxCollider boxCollider = bbqed.AddComponent<BoxCollider>();
+        boxCollider.size = new Vector3(2f, 2f, 2f);
+        Globals.invCounter++;
         Globals.inventory.Add(bbqed);
         msgTxt.text = "Food added to Inventory";
         mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;

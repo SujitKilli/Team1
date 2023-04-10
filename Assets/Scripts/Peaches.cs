@@ -8,6 +8,7 @@ public class Peaches : MonoBehaviour
     private Outline myoutline;
     public GameObject mesageObj;
     public TextMeshProUGUI msgTxt;
+    public bool isStoredOnce = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,7 @@ public class Peaches : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(myoutline.enabled && Input.GetButtonDown(Globals.x)){
+        if(myoutline.enabled && Input.GetButtonDown(Globals.x) && !isStoredOnce){
             if(Globals.invCounter == Globals.inventoryLimit){
                 msgTxt.text  = "Inventory full!!";
                 mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;
@@ -31,6 +32,7 @@ public class Peaches : MonoBehaviour
     }
 
     IEnumerator StoreFruit(){
+        isStoredOnce = true;
         GetComponentInParent<PeachTree>().createChildFruits();
         gameObject.transform.SetParent(null);
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();

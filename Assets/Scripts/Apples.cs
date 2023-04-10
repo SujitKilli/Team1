@@ -9,6 +9,7 @@ public class Apples : MonoBehaviour
     private Outline myoutline;
     public GameObject mesageObj;
     public TextMeshProUGUI msgTxt;
+    public bool isStoredOnce = false;
     void Start()
     {
         myoutline = GetComponent<Outline>();
@@ -17,7 +18,7 @@ public class Apples : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(myoutline.enabled && Input.GetButtonDown(Globals.x)){
+        if(myoutline.enabled && Input.GetButtonDown(Globals.x) && !isStoredOnce){
             if(Globals.invCounter == Globals.inventoryLimit){
                 msgTxt.text  = "Inventory full!!";
                 mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;
@@ -31,6 +32,7 @@ public class Apples : MonoBehaviour
     }
 
     IEnumerator StoreFruit(){
+        isStoredOnce = true;
         GetComponentInParent<AppleTree>().createChildFruits();
         gameObject.transform.SetParent(null);
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();

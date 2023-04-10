@@ -9,6 +9,7 @@ public class Fishes : MonoBehaviour
     public GameObject mesageObj,parentPond,fishingrodprefab;
     public TextMeshProUGUI msgTxt;
     private GameObject localfishingrod;
+    public bool isStoredOnce = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class Fishes : MonoBehaviour
         else{
             localfishingrod.SetActive(false);
         }
-        if(myoutline.enabled && Input.GetButtonDown(Globals.x)){
+        if(myoutline.enabled && Input.GetButtonDown(Globals.x) && !isStoredOnce){
             if(Globals.invCounter == Globals.inventoryLimit){
                 msgTxt.text  = "Inventory full!!";
                 mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;
@@ -46,6 +47,7 @@ public class Fishes : MonoBehaviour
     }
 
     private void StoreFish(){
+        isStoredOnce = true;
         localfishingrod.SetActive(false);
         parentPond.GetComponent<FishPond>().createFish();
         gameObject.SetActive(false);

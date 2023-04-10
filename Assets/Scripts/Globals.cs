@@ -33,11 +33,13 @@ public static class Globals
 
     public static bool isFly = false;
 
+    public static bool isInv = false;
+
     public static float ypos = 0f;
     
     public static List<GameObject> inventory = new List<GameObject>();
     public static int invCounter = 0;
-    public static int inventoryLimit = 4;   
+    public static int inventoryLimit = 3;   
 
     public static List<GameObject> boundaries = new List<GameObject>();
 

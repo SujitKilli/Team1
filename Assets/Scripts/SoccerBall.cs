@@ -34,15 +34,16 @@ public class SoccerBall : MonoBehaviour
         if (Input.GetButtonDown(Globals.x))
         {
             ball.transform.SetParent(null);
-            Vector3 shoot = (gameObject.transform.position- Camera.main.transform.position + Camera.main.transform.forward * 150).normalized;
+            character.GetComponent<CharacterMovement>().enabled = false;
+            Vector3 shoot = (gameObject.transform.position - Camera.main.transform.position + Camera.main.transform.forward * 150).normalized;
             GetComponent<Rigidbody>().AddForce(shoot * force+new Vector3(0,5f,0), ForceMode.Impulse);
-
         }
         if ((gameObject.transform.position).magnitude > (goal.transform.position).magnitude)
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().isKinematic = true;
             ball.transform.position = character.transform.position + new Vector3(0, 0, 10);
+            character.GetComponent<CharacterMovement>().enabled = true;
             chances--;
             chance.text = chances.ToString();
         }
@@ -65,6 +66,7 @@ public class SoccerBall : MonoBehaviour
             source.Play();
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().isKinematic = true;
+            character.GetComponent<CharacterMovement>().enabled = true;
             chances--;
             chance.text = chances.ToString();
             ball.transform.position=character.transform.position+new Vector3(0,0,10);

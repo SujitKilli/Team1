@@ -29,14 +29,10 @@ public class ChangingOptions : MonoBehaviour
         if (menu.activeSelf == true)
         {
             characterControl.enabled = false;
-            //transform.LookAt(target);
             rectile.SetActive(false);
-            //motor.canControl = false;
-            //eventSystem.SetActive(false);
-            //Debug.Log(Input.GetAxis("Horizontal"));
             if (Time.time - lasttime > 0.5f)
             {
-                if (Input.GetAxis("Vertical") > 0)
+                if (Input.GetAxis(Globals.ver) < 0)
                 {
                     index--;
                     if (index < 0)
@@ -46,7 +42,7 @@ public class ChangingOptions : MonoBehaviour
                     HighlightButton(index);
                     lasttime = Time.time;
                 }
-                else if (Input.GetAxis("Vertical") < 0)
+                else if (Input.GetAxis(Globals.ver) > 0)
                 {
                     index++;
                     if (index >=buttons.Length)
@@ -56,7 +52,7 @@ public class ChangingOptions : MonoBehaviour
                     HighlightButton(index);
                     lasttime = Time.time;
                 }
-                else if (Input.GetAxis("Horizontal") > 0)
+                else if (Input.GetAxis(Globals.hor) > 0)
                 {
                     foreach (Button b in buttons)
                     {
@@ -66,7 +62,7 @@ public class ChangingOptions : MonoBehaviour
                     ishelphighlighted = true;
                     lasttime = Time.time;
                 }
-                else if (Input.GetAxis("Horizontal") < 0)
+                else if (Input.GetAxis(Globals.hor) < 0)
                 {
                     ishelphighlighted = false;
                     helpbutton[helpindex].image.color = Color.white;
@@ -86,8 +82,5 @@ public class ChangingOptions : MonoBehaviour
             b.image.color = Color.white;
         }
         buttons[index].image.color = Color.yellow;
-        //Debug.Log(menuButtons[index].GetComponentInChildren<Text>());
-        //Debug.Log(index);
-        //ishighlighted = true;
     }
 }

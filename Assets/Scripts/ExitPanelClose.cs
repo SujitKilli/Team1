@@ -23,7 +23,7 @@ public class ExitPanelClose : MonoBehaviour
             if (Time.time - lasttime > 0.5f)
             {
                 //Debug.Log("inhorizontal")
-                if (Input.GetAxis("Horizontal") > 0)
+                if (Input.GetAxis(Globals.hor) > 0)
                 {
                     exitpanel.exitindex--;
                     //Debug.Log(exitpanel.exitindex);
@@ -34,7 +34,7 @@ public class ExitPanelClose : MonoBehaviour
                     HighlightButton(exitpanel.exitindex);
                     lasttime = Time.time;
                 }
-                else if (Input.GetAxis("Horizontal") < 0)
+                else if (Input.GetAxis(Globals.hor) < 0)
                 {
                     exitpanel.exitindex++;
                     if (exitpanel.exitindex >= exitpanel.exitbuttons.Length)
@@ -47,13 +47,13 @@ public class ExitPanelClose : MonoBehaviour
             }
         }
 
-        if (exitpanel.exitindex==1 && Input.GetButtonDown("js3"))
+        if (exitpanel.exitindex==1 && Input.GetButtonDown(Globals.ok))
         {
             panel.SetActive(false);
             cmenu.menu.SetActive(true);
             cmenu.help.SetActive(true);
         }
-        else if(exitpanel.exitindex==0 && Input.GetButtonDown("js3"))
+        else if(exitpanel.exitindex==0 && Input.GetButtonDown(Globals.ok))
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -69,8 +69,5 @@ public class ExitPanelClose : MonoBehaviour
             b.image.color = Color.white;
         }
         exitpanel.exitbuttons[index].image.color = Color.yellow;
-        //Debug.Log(exitpanel.exitbuttons[index].GetComponentInChildren<Text>());
-        //Debug.Log(index);
-        //ishighlighted = true;
     }
 }

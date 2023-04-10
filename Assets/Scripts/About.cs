@@ -19,14 +19,10 @@ public class About : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(cmenu.index==1 && (Input.GetButtonDown("js3")))
+        if(cmenu.index==1 && (Input.GetButtonDown(Globals.ok)))
         {
-            //mainmenu.SetActive(false);
             cmenu.menu.SetActive(false);
             panel.SetActive(true);
-   
-
-
         }
     }
     

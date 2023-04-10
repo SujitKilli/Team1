@@ -24,7 +24,7 @@ public class Exit : MonoBehaviour
     void Update()
     {
         //Debug.Log(cmenu.index);
-        if (cmenu.index == 2 && Input.GetButtonDown("js3"))
+        if (cmenu.index == 2 && Input.GetButtonDown(Globals.ok))
         {
             exitpanel.SetActive(true);
             menu.SetActive(false);
@@ -36,7 +36,7 @@ public class Exit : MonoBehaviour
                 if (Time.time - lasttime > 0.5f)
                 {
                 //Debug.Log("inhorizontal")
-                    if (Input.GetAxis("Horizontal") > 0)
+                    if (Input.GetAxis(Globals.hor) < 0)
                     {
                         exitindex--;
                         Debug.Log(exitindex);
@@ -47,7 +47,7 @@ public class Exit : MonoBehaviour
                         HighlightButton(exitindex);
                         lasttime = Time.time;
                     }
-                    else if (Input.GetAxis("Horizontal") < 0)
+                    else if (Input.GetAxis(Globals.hor)  > 0)
                     {
                         exitindex++;
                         if (exitindex >= exitbuttons.Length)
@@ -67,9 +67,6 @@ public class Exit : MonoBehaviour
             b.image.color = Color.white;
         }
         exitbuttons[index].image.color = Color.yellow;
-        //Debug.Log(exitbuttons[index].GetComponentInChildren<Text>());
-        //Debug.Log(index);
-        //ishighlighted = true;
     }
 
 }

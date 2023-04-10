@@ -15,7 +15,7 @@ public class Help : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     if(cmenu.ishelphighlighted==true && Input.GetButtonDown("js3"))
+     if(cmenu.ishelphighlighted==true && Input.GetButtonDown(Globals.ok))
         {
             cmenu.menu.SetActive(false);
             cmenu.help.SetActive(false);

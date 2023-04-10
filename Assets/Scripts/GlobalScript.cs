@@ -8,18 +8,22 @@ using UnityEngine.SceneManagement;
 public class GlobalScript : MonoBehaviour
 {
     public Button[] teleportbuttons;
-    public GameObject teleportmenu,garden,mountain,beach;
+    public GameObject teleportmenu,garden,mountain,beach,invMenu;
     private CharacterMovement cm;
     private CharacterController charCntrl;
     public GameObject reticle,UMenu,rain;
     public List<GameObject> boundaries = new List<GameObject>();
     public List<Button> GlobalBtns = new List<Button>();
+    public List<Button> invBtns = new List<Button>();
     public TextMeshProUGUI speedText,weatherText;
-    private int ind = 0,speed = 2,weather = 0,teleindex = 0;
+    private int ind = 0,speed = 2,weather = 0,teleindex = 0,invInd = 0,countim = 0;
     private bool nextAxInp = true;
     public float flyMoveSpeed = 0.01f;
     public Material Morning,Night,Cloudy,Sunset;
     private float lasttime;
+    public Sprite Apple,Chickenbbq,Fish,Fishbbq,Pear,Steakbbq;
+    private bool isGrabbed = false;
+    private GameObject grabbedObj = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +40,46 @@ public class GlobalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isGrabbed && Input.GetButtonDown(Globals.b)){
+            StartCoroutine(DropObj());
+        }
+
+        if(Globals.isInv){
+            if(Input.GetButtonDown(Globals.globalMenu)){
+                closeInventory();
+            }
+            else if (Input.GetButtonDown(Globals.ok))
+            {
+                if (invInd < countim)
+                {
+                    grabbedObj = Globals.inventory[invInd];
+                    Globals.inventory.RemoveAt(invInd);
+                    Globals.invCounter--;
+                    grabbedObj.SetActive(true);
+                    isGrabbed = true;
+                    grabbedObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 10f;
+                    grabbedObj.transform.SetParent(Camera.main.transform);
+                }
+                closeInventory();
+            }
+            else if(nextAxInp){
+                if (Input.GetAxis(Globals.hor) < 0){
+                    nextAxInp = false;
+                    StartCoroutine(ReEnableAxes());
+                    invInd--;
+                    if(invInd==-1) invInd = 2;
+                    highlightInv(invInd);
+                }       
+                else if(Input.GetAxis(Globals.hor) > 0){
+                    nextAxInp = false;
+                    StartCoroutine(ReEnableAxes());
+                    invInd++;
+                    if(invInd==3) invInd = 0;
+                    highlightInv(invInd);
+                }           
+            }
+        }
+
         if(Globals.isFly){
             if(Input.GetButtonDown(Globals.b)){
                 Globals.isFly = false;
@@ -135,7 +179,7 @@ public class GlobalScript : MonoBehaviour
             }
         }
 
-        if(Globals.sat  || Globals.boatsat || Globals.isglobalVisible || Globals.isFly || Globals.isTeleport) Globals.hideOutline = true;
+        if(Globals.sat  || Globals.boatsat || Globals.isglobalVisible || Globals.isFly || Globals.isTeleport || Globals.isInv) Globals.hideOutline = true;
         else Globals.hideOutline = false;
         if(Input.GetButtonDown(Globals.b) && Globals.sat){
             Globals.sat = false;
@@ -150,7 +194,7 @@ public class GlobalScript : MonoBehaviour
             Globals.ToggleBoundaries(false);
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x,Globals.ypos,Camera.main.transform.position.z);
         }
-        if(Input.GetButtonDown(Globals.globalMenu) && !Globals.boatsat && !Globals.sat && !Globals.isFly && !Globals.isTeleport){
+        if(Input.GetButtonDown(Globals.globalMenu) && !Globals.boatsat && !Globals.sat && !Globals.isFly && !Globals.isTeleport && !Globals.isInv){
             if(!Globals.isglobalVisible){
                 ind = 0;
                 highlight(0);
@@ -192,7 +236,7 @@ public class GlobalScript : MonoBehaviour
                     flyHigh();
                 }
                 else if(ind == 2){
-                    
+                    openInventory();
                 }
                 else if(ind == 3){
                     toggleWeather();
@@ -206,6 +250,8 @@ public class GlobalScript : MonoBehaviour
     }
 
     private void openTeleport(){
+        teleindex = 0;
+        HighlightButton(0);
         UMenu.transform.SetParent(null);
         Globals.isglobalVisible = false;
         Globals.isTeleport = true;
@@ -214,6 +260,51 @@ public class GlobalScript : MonoBehaviour
         teleportmenu.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 14f;
         teleportmenu.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
         teleportmenu.transform.SetParent(Camera.main.transform);
+    }
+
+    private void openInventory(){
+        invInd = 0;
+        highlightInv(0);
+        countim = Globals.inventory.Count;
+        Debug.Log(countim);
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == 0)
+            {
+                if (i < countim) invBtns[i].image.sprite = getSpriteForGO(Globals.inventory[i]);
+                else invBtns[i].image.sprite = null;
+            }
+            else if (i == 1)
+            {
+                if (i < countim) invBtns[i].image.sprite = getSpriteForGO(Globals.inventory[i]);
+                else invBtns[i].image.sprite = null;
+            }
+            else if (i == 2)
+            {
+                if (i < countim) invBtns[i].image.sprite = getSpriteForGO(Globals.inventory[i]);
+                else invBtns[i].image.sprite = null;
+            }
+        }
+        UMenu.transform.SetParent(null);
+        Globals.isglobalVisible = false;
+        Globals.isInv = true;
+        UMenu.SetActive(false);
+        invMenu.SetActive(true);
+        invMenu.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 20f;
+        invMenu.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+        invMenu.transform.SetParent(Camera.main.transform);
+    }
+
+    private Sprite getSpriteForGO(GameObject g)
+    {
+        Sprite curSprite = null;
+        if (g.tag == "apple") return Apple;
+        else if (g.tag == "peach") return Pear;
+        else if (g.tag == "fish") return Fish;
+        else if (g.tag == "fishbbq") return Fishbbq;
+        else if (g.tag == "chickenbbq") return Chickenbbq;
+        else if (g.tag == "steakbbq") return Steakbbq;
+        return null;
     }
 
     private void flyHigh(){
@@ -285,6 +376,8 @@ public class GlobalScript : MonoBehaviour
     }
 
     private void closeGlobalMenu(){
+        ind = 0;
+        highlight(0);
         UMenu.transform.SetParent(null);
         Globals.isglobalVisible = false;
         reticle.transform.localScale = new Vector3(1,1,1);
@@ -302,9 +395,30 @@ public class GlobalScript : MonoBehaviour
         cm.enabled = true;
     }
 
+    public void closeInventory(){
+        invInd = 0;
+        highlightInv(invInd);
+        invMenu.transform.SetParent(null);
+        Globals.isInv = false;
+        reticle.transform.localScale = new Vector3(1,1,1);
+        invMenu.SetActive(false);
+        cm.enabled = true;
+    }
+
     IEnumerator ReEnableAxes() {
         yield return new WaitForSeconds(0.2f);
         nextAxInp = true;
+    }
+
+    IEnumerator DropObj() {
+        isGrabbed = false;
+        grabbedObj.transform.SetParent(null);
+        Rigidbody rb = grabbedObj.AddComponent<Rigidbody>();
+        rb.mass = 2f;
+        rb.useGravity = true;
+        grabbedObj = null;
+        yield return new WaitForSeconds(5f);
+        Destroy(rb);
     }
 
     public void HighlightButton(int index)
@@ -316,5 +430,11 @@ public class GlobalScript : MonoBehaviour
         teleportbuttons[index].image.color = Color.yellow;
     }
 
-    
+    public void highlightInv(int ind){
+        foreach (Button b in invBtns)
+        {
+            b.image.color = Color.white;
+        }
+        invBtns[ind].image.color = Color.yellow;
+    }
 }

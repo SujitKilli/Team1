@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - apple
+  - peach
+  - fish
+  - chickenbbq
+  - steakbbq
+  - fishbbq
   layers:
   - Default
   - TransparentFX
