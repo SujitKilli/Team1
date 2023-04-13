@@ -17,12 +17,11 @@ public class HelpPanelClose : MonoBehaviour
     {
         if (helppanel.activeSelf == true && Input.GetButtonDown(Globals.x))
         {
-
+            cmenu.helpbutton[0].image.color = Color.white;
             //Debug.Log("Close");
             helppanel.SetActive(false);
             cmenu.menu.SetActive(true);
             cmenu.help.SetActive(true);
-            cmenu.helpbutton[0].image.color = Color.white;
         }
     }
 }

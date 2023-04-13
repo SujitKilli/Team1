@@ -9,7 +9,6 @@ public class Barbecue : MonoBehaviour
     public GameObject bbqmenu,bbqplate,mesageObj;
     public TextMeshProUGUI msgTxt;
     private List<GameObject> bbq = new List<GameObject>();
-    private int invLimit = 10;
     public GameObject chickRaw, chickRoasted, fishRaw, fishRoasted, steakRaw, steakRoasted;
 
     void Start()
@@ -31,7 +30,7 @@ public class Barbecue : MonoBehaviour
             }
         }
         if(Input.GetButtonDown(Globals.ok) && bbqmenu.activeSelf){
-            if(Globals.invCounter == Globals.inventoryLimit){
+            if(Globals.invCounter >= Globals.inventoryLimit){
                 msgTxt.text  = "Inventory full!!";
                 mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;
                 mesageObj.transform.LookAt(Camera.main.transform);
@@ -90,7 +89,6 @@ public class Barbecue : MonoBehaviour
         bbqed.tag = tag;
         BoxCollider boxCollider = bbqed.AddComponent<BoxCollider>();
         boxCollider.size = new Vector3(2f, 2f, 2f);
-        Globals.invCounter++;
         Globals.inventory.Add(bbqed);
         msgTxt.text = "Food added to Inventory";
         mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;

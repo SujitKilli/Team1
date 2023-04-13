@@ -323,7 +323,8 @@ MonoBehaviour:
   helpbutton: []
   menu: {fileID: 1082259334}
   help: {fileID: 111104440}
-  characterControl: {fileID: 2015066645}
+  character: {fileID: 2015066643}
+  xr: {fileID: 2031575507}
   rectile: {fileID: 1142384753}
   index: 0
   helpindex: 0
@@ -3388,7 +3389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7287137020755404942, guid: 186741bf17cbb0e4fa3ef06daa1f190f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 642
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7287137020755404942, guid: 186741bf17cbb0e4fa3ef06daa1f190f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4035,7 +4036,7 @@ MonoBehaviour:
     Joy
     Stick - For scrolling thorugh menus
 
-'
+    Please click "X" to close this panel'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4098,7 +4099,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -774.1852, w: -304.00995}
+  m_margin: {x: 0, y: 0, z: -996.63727, w: -287.53336}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4531,7 +4532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   cameraObj: {fileID: 1389141939}
-  joyStickMode: 1
+  joyStickMode: 0
 --- !u!143 &2015066645
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4558,7 +4559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015066643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -624, y: 2, z: -15}
+  m_LocalPosition: {x: 17, y: 2, z: -52.8}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4566,6 +4567,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2031575507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7287137019966064018, guid: 186741bf17cbb0e4fa3ef06daa1f190f, type: 3}
+  m_PrefabInstance: {fileID: 1239638544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2134809585
 PrefabInstance:
   m_ObjectHideFlags: 0

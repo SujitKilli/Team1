@@ -1734,7 +1734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   cameraObj: {fileID: 481808554}
-  joyStickMode: 1
+  joyStickMode: 0
 --- !u!143 &2080649524
 CharacterController:
   m_ObjectHideFlags: 0

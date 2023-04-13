@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GlobalScript : MonoBehaviour
 {
     public Button[] teleportbuttons;
-    public GameObject teleportmenu,garden,mountain,beach,invMenu;
+    public GameObject teleportmenu,garden,mountain,beach,invMenu,helpMenu;
     private CharacterMovement cm;
     private CharacterController charCntrl;
     public GameObject reticle,UMenu,rain;
@@ -18,7 +18,7 @@ public class GlobalScript : MonoBehaviour
     public TextMeshProUGUI speedText,weatherText;
     private int ind = 0,speed = 2,weather = 0,teleindex = 0,invInd = 0,countim = 0;
     private bool nextAxInp = true;
-    public float flyMoveSpeed = 0.01f;
+    public float flyMoveSpeed = 0.1f;
     public Material Morning,Night,Cloudy,Sunset;
     private float lasttime;
     public Sprite Apple,Chickenbbq,Fish,Fishbbq,Pear,Steakbbq;
@@ -40,8 +40,20 @@ public class GlobalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isGrabbed && Input.GetButtonDown(Globals.x)){
+             isGrabbed = false;
+             grabbedObj.transform.SetParent(null);
+             grabbedObj = null;
+        }
+
         if(isGrabbed && Input.GetButtonDown(Globals.b)){
             StartCoroutine(DropObj());
+        }
+
+        if(Globals.isHelp){
+            if(Input.GetButtonDown(Globals.b)){
+                closeHelp();
+            }
         }
 
         if(Globals.isInv){
@@ -119,7 +131,7 @@ public class GlobalScript : MonoBehaviour
             else {
                 if (Time.time - lasttime > 0.5f)
                 {
-                    if (Input.GetAxis(Globals.ver) < 0)
+                    if (Input.GetAxis(Globals.ver) > 0)
                     {
                         teleindex--;
                         if (teleindex < 0)
@@ -129,7 +141,7 @@ public class GlobalScript : MonoBehaviour
                         HighlightButton(teleindex);
                         lasttime = Time.time;
                     }
-                    else if (Input.GetAxis(Globals.ver) > 0)
+                    else if (Input.GetAxis(Globals.ver) < 0)
                     {
                         teleindex++;
                         if (teleindex >= teleportbuttons.Length)
@@ -179,7 +191,7 @@ public class GlobalScript : MonoBehaviour
             }
         }
 
-        if(Globals.sat  || Globals.boatsat || Globals.isglobalVisible || Globals.isFly || Globals.isTeleport || Globals.isInv) Globals.hideOutline = true;
+        if(Globals.sat  || Globals.boatsat || Globals.isglobalVisible || Globals.isFly || Globals.isTeleport || Globals.isInv || Globals.isHelp) Globals.hideOutline = true;
         else Globals.hideOutline = false;
         if(Input.GetButtonDown(Globals.b) && Globals.sat){
             Globals.sat = false;
@@ -194,7 +206,7 @@ public class GlobalScript : MonoBehaviour
             Globals.ToggleBoundaries(false);
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x,Globals.ypos,Camera.main.transform.position.z);
         }
-        if(Input.GetButtonDown(Globals.globalMenu) && !Globals.boatsat && !Globals.sat && !Globals.isFly && !Globals.isTeleport && !Globals.isInv){
+        if(Input.GetButtonDown(Globals.globalMenu) && !Globals.boatsat && !Globals.sat && !Globals.isFly && !Globals.isTeleport && !Globals.isInv && !Globals.isHelp){
             if(!Globals.isglobalVisible){
                 ind = 0;
                 highlight(0);
@@ -213,40 +225,62 @@ public class GlobalScript : MonoBehaviour
 
         if (Globals.isglobalVisible){
             if(nextAxInp){
-                if(Input.GetAxis(Globals.ver) > 0){
+                if(Input.GetAxis(Globals.ver) < 0){
                     nextAxInp = false;
                     StartCoroutine(ReEnableAxes());
                     ind++;
-                    if(ind==6) ind = 0;
+                    if(ind==7) ind = 0;
                     highlight(ind);
                 }
-                else if(Input.GetAxis(Globals.ver) < 0){
+                else if(Input.GetAxis(Globals.ver) > 0){
                     nextAxInp = false;
                     StartCoroutine(ReEnableAxes());
                     ind--;
-                    if(ind==-1) ind = 5;
+                    if(ind==-1) ind = 6;
                     highlight(ind);
                 }
             }
             if(Input.GetButtonDown(Globals.ok)){
                 if(ind == 0){
-                    toggleSpeed();
+                    openHelp();
                 }
                 else if(ind == 1){
-                    flyHigh();
+                    toggleSpeed();
                 }
                 else if(ind == 2){
-                    openInventory();
+                    flyHigh();
                 }
                 else if(ind == 3){
-                    toggleWeather();
+                    openInventory();
                 }
                 else if(ind == 4){
+                    toggleWeather();
+                }
+                else if(ind == 5){
                     openTeleport();
                 }
                 else Application.Quit();
             }
         }
+    }
+
+    private void openHelp(){
+        UMenu.transform.SetParent(null);
+        Globals.isglobalVisible = false;
+        Globals.isHelp = true;
+        UMenu.SetActive(false);
+        helpMenu.SetActive(true);
+        helpMenu.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 20f;
+        helpMenu.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+        helpMenu.transform.SetParent(Camera.main.transform);
+    }
+
+    private void closeHelp(){
+        helpMenu.transform.SetParent(null);
+        Globals.isHelp = false;
+        reticle.transform.localScale = new Vector3(1,1,1);
+        helpMenu.SetActive(false);
+        cm.enabled = true;
     }
 
     private void openTeleport(){
@@ -297,7 +331,6 @@ public class GlobalScript : MonoBehaviour
 
     private Sprite getSpriteForGO(GameObject g)
     {
-        Sprite curSprite = null;
         if (g.tag == "apple") return Apple;
         else if (g.tag == "peach") return Pear;
         else if (g.tag == "fish") return Fish;

@@ -8,8 +8,7 @@ public class Audio : MonoBehaviour
     public GameObject menu;
     public GameObject speaker;
     public AudioSource musicSource;
-    public GameObject reticle;
-    public CharacterController character;
+    public GameObject reticle,character;
     public Button[] buttons;
     public int index;
     public float lasttime;
@@ -18,26 +17,27 @@ public class Audio : MonoBehaviour
     {
         buttons=menu.GetComponentsInChildren<Button>();
         HighlightButton(index);
+        musicSource.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("js8"))
+        if(Input.GetButtonDown(Globals.x))
         {
             if(Turn == true && menu.activeSelf==false)
         {
     
             menu.SetActive(true);
             menu.transform.position=speaker.transform.position+new Vector3(0,0.2f,0);
-            reticle.SetActive(false);
-            character.enabled=false;
-            
+            reticle.transform.localScale = new Vector3(0,0,0);
+            character.GetComponent<CharacterMovement>().enabled = false;   
+            menu.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward); 
         }
         else if(menu.activeSelf==true){
             menu.SetActive(false);
-            reticle.SetActive(true);
-            character.enabled=true;
+            reticle.transform.localScale = new Vector3(1,1,1);
+            character.GetComponent<CharacterMovement>().enabled = true;
         }
 
         }
@@ -46,7 +46,7 @@ public class Audio : MonoBehaviour
             
                 if (Time.time - lasttime > 0.5f)
             {
-                if (Input.GetAxis("Horizontal") < 0)
+                if (Input.GetAxis(Globals.hor) < 0)
                 {
                     index--;
                     if (index < 0)
@@ -56,7 +56,7 @@ public class Audio : MonoBehaviour
                     HighlightButton(index);
                     lasttime = Time.time;
                 }
-                else if (Input.GetAxis("Horizontal") > 0)
+                else if (Input.GetAxis(Globals.hor) > 0)
                 {
                     index++;
                     if (index >=buttons.Length)
@@ -67,17 +67,17 @@ public class Audio : MonoBehaviour
                     lasttime = Time.time;
                 }
             }
-            if(index==0 && Input.GetButtonDown("js10")){
+            if(index==0 && Input.GetButtonDown(Globals.ok)){
             musicSource.Play();
         }
-        else if(index==1 && Input.GetButtonDown("js10")){
+        else if(index==1 && Input.GetButtonDown(Globals.ok)){
             musicSource.Pause();
         }
-        else if(index==2 && Input.GetButtonDown("js10")){
+        else if(index==2 && Input.GetButtonDown(Globals.ok)){
             musicSource.Stop();
             menu.SetActive(false);
             reticle.SetActive(true);
-            character.enabled=true;
+            character.GetComponent<CharacterMovement>().enabled = true;
         }
 
         }
@@ -86,13 +86,11 @@ public class Audio : MonoBehaviour
     }
      public void OnPointEnter()
     {
-        Debug.Log("Entered ");
         Turn=true;
 
     }
     public void OnPointerExit()
     {
-        Debug.Log("Exit");
         Turn = false;
     }
     public void HighlightButton(int index)

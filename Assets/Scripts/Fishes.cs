@@ -21,7 +21,7 @@ public class Fishes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(myoutline.enabled){
+        if(myoutline.enabled && !isStoredOnce){
             localfishingrod.SetActive(true);
             localfishingrod.transform.position = Camera.main.transform.position + Camera.main.transform.forward*7f;
             localfishingrod.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
@@ -32,8 +32,8 @@ public class Fishes : MonoBehaviour
         else{
             localfishingrod.SetActive(false);
         }
-        if(myoutline.enabled && Input.GetButtonDown(Globals.x) && !isStoredOnce){
-            if(Globals.invCounter == Globals.inventoryLimit){
+        if(myoutline.enabled && Input.GetButtonDown(Globals.x)){
+            if(Globals.invCounter >= Globals.inventoryLimit){
                 msgTxt.text  = "Inventory full!!";
                 mesageObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward*6f;
                 mesageObj.transform.LookAt(Camera.main.transform);

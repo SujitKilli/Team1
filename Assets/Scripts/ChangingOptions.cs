@@ -10,7 +10,8 @@ public class ChangingOptions : MonoBehaviour
     public Button[] helpbutton;
     public GameObject menu;
     public GameObject help;
-    public CharacterController characterControl;
+    public GameObject character;
+    public GameObject xr;
     public GameObject rectile;
     public int index = 0;
     public int helpindex = 0;
@@ -20,6 +21,8 @@ public class ChangingOptions : MonoBehaviour
     {
         buttons = menu.GetComponentsInChildren<Button>();
         helpbutton = help.GetComponentsInChildren<Button>();
+        character.GetComponent<CharacterMovement>().enabled = false;
+        xr.GetComponent<XRCardboardController>().enabled = false;
         HighlightButton(index);
     }
 
@@ -28,11 +31,10 @@ public class ChangingOptions : MonoBehaviour
     {
         if (menu.activeSelf == true)
         {
-            characterControl.enabled = false;
             rectile.SetActive(false);
             if (Time.time - lasttime > 0.5f)
             {
-                if (Input.GetAxis(Globals.ver) < 0)
+                if (Input.GetAxis(Globals.ver) > 0)
                 {
                     index--;
                     if (index < 0)
@@ -42,7 +44,7 @@ public class ChangingOptions : MonoBehaviour
                     HighlightButton(index);
                     lasttime = Time.time;
                 }
-                else if (Input.GetAxis(Globals.ver) > 0)
+                else if (Input.GetAxis(Globals.ver) < 0)
                 {
                     index++;
                     if (index >=buttons.Length)
@@ -61,13 +63,15 @@ public class ChangingOptions : MonoBehaviour
                     helpbutton[helpindex].image.color = Color.yellow;
                     ishelphighlighted = true;
                     lasttime = Time.time;
+                    index = -1;
                 }
                 else if (Input.GetAxis(Globals.hor) < 0)
                 {
                     ishelphighlighted = false;
                     helpbutton[helpindex].image.color = Color.white;
+                    index = 0;
                     HighlightButton(index);
-                    lasttime = Time.time;
+                    lasttime = Time.time;                    
                 }
             }
 

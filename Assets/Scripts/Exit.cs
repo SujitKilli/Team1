@@ -24,41 +24,12 @@ public class Exit : MonoBehaviour
     void Update()
     {
         //Debug.Log(cmenu.index);
-        if (cmenu.index == 2 && Input.GetButtonDown(Globals.ok))
+        if (!exitpanel.activeSelf && cmenu.index == 2 && Input.GetButtonDown(Globals.ok))
         {
             exitpanel.SetActive(true);
             menu.SetActive(false);
             helpmenu.SetActive(false);
         }
-            if (exitpanel.activeSelf == true)
-            {
-            //Debug.Log("inexit");
-                if (Time.time - lasttime > 0.5f)
-                {
-                //Debug.Log("inhorizontal")
-                    if (Input.GetAxis(Globals.hor) < 0)
-                    {
-                        exitindex--;
-                        Debug.Log(exitindex);
-                        if (exitindex < 0)
-                        {
-                            exitindex = exitbuttons.Length - 1;
-                        }
-                        HighlightButton(exitindex);
-                        lasttime = Time.time;
-                    }
-                    else if (Input.GetAxis(Globals.hor)  > 0)
-                    {
-                        exitindex++;
-                        if (exitindex >= exitbuttons.Length)
-                        {
-                            exitindex = 0;
-                        }
-                        HighlightButton(exitindex);
-                        lasttime = Time.time;
-                    }
-                }
-            }
     }
     public void HighlightButton(int index)
     {

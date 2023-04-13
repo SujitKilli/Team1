@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 public class SoccerBall : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -75,10 +77,6 @@ public class SoccerBall : MonoBehaviour
     }
     public void Exit()
     {
-#if UNITY_EDITOR
-                         UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        SceneManager.LoadScene("Beach");
     }
 }

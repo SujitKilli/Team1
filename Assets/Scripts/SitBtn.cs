@@ -17,12 +17,11 @@ public class SitBtn : MonoBehaviour
     {
         if(isEnter && Globals.sitter != null && Input.GetButtonDown(Globals.ok)){
             Globals.sat = true;
-            Camera.main.transform.position = new Vector3(Globals.sitter.transform.position.x,Camera.main.transform.position.y,Globals.sitter.transform.position.z);
-            Camera.main.transform.position+= Globals.sitter.transform.forward;
+            character.transform.position = Globals.sitter.transform.position+new Vector3(0, 12f, 0);
             Globals.sitter = null;
-            cm.enabled = false;
             sitmenu.SetActive(false);
             reticle.transform.localScale = new Vector3(0,0,0);
+            cm.enabled = false;
         }
     }
 

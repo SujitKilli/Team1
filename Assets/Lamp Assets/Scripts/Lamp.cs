@@ -24,7 +24,7 @@ public class Lamp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        if(TurnOn==true && Input.GetButtonDown("js8"))
+        if(TurnOn==true && Input.GetButtonDown(Globals.x))
         {
 
     

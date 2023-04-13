@@ -15,7 +15,7 @@ public class PanelClose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (panel.activeSelf == true && Input.GetButtonDown("js1"))
+        if (panel.activeSelf == true && Input.GetButtonDown(Globals.x))
         {
             
                 //Debug.Log("Close");

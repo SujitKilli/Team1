@@ -4,14 +4,23 @@ using UnityEngine;
 
 public static class Globals
 {
-    public static string x = "js1";
-    public static string y = "js0";
-    public static string a = "js3";
-    public static string b = "js2";
-    public static string ok = "js9";
-    public static string globalMenu = "js3";
-    public static string ver = "Horizontal";
-    public static string hor = "Vertical";
+    // public static string x = "js1";
+    // public static string y = "js0";
+    // public static string a = "js3";
+    // public static string b = "js2";
+    // public static string ok = "js9";
+    // public static string globalMenu = "js3";
+    // public static string ver = "Horizontal";
+    // public static string hor = "Vertical";
+
+    public static string x = "js2";
+    public static string y = "js3";
+    public static string a = "js10";
+    public static string b = "js5";
+    public static string ok = "js0";
+    public static string globalMenu = "js11";
+    public static string ver = "Vertical";
+    public static string hor = "Horizontal";
 
     public static bool isChicken = false;
     public static bool isSteak = false;
@@ -34,6 +43,8 @@ public static class Globals
     public static bool isFly = false;
 
     public static bool isInv = false;
+
+    public static bool isHelp = false;
 
     public static float ypos = 0f;
     
