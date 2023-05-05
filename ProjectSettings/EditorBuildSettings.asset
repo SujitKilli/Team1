@@ -14,9 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game.unity
     guid: d06035f570a1ae842ba7520d276611f8
-  - enabled: 1
-    path: Assets/Room.unity
-    guid: f01afad863f6159428a83904a1e3722f
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/MiLabCardboardExtension/Scenes/Map Bluetooth Key.unity
     guid: 1eb807ac90408844da5fd17e087fea1e
